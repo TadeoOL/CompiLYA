@@ -271,7 +271,21 @@ namespace Compi
 
         private void expression()
         {
-
+            simpleExpression();
+            if (listaToken.ElementAt<Token>(p).ValorToken == 107 || //Operadores relacionales
+                listaToken.ElementAt<Token>(p).ValorToken == 108 ||
+                listaToken.ElementAt<Token>(p).ValorToken == 109 ||
+                listaToken.ElementAt<Token>(p).ValorToken == 110 ||
+                listaToken.ElementAt<Token>(p).ValorToken == 111 ||
+                listaToken.ElementAt<Token>(p).ValorToken == 112)
+            {
+                p++;
+                simpleExpression();
+            }
+            else
+            {
+                listaError.Add(ManejoErrores(500, listaToken.ElementAt<Token>(p).Linea)); //arreglar errores
+            }
         }
 
         private void ifStatement()
@@ -287,6 +301,17 @@ namespace Compi
         private void entireVariable()
         {
 
+        }
+
+        private void simpleExpression()
+        {
+            term();
+            if (listaToken.ElementAt<Token>(p).ValorToken == 103 ||
+                listaToken.ElementAt<Token>(p).ValorToken == 104)
+            {
+                p++;
+                sign();
+            }
         }
         private Error ManejoErrores(int estado, int linea)
         {
