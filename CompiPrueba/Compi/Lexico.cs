@@ -9,54 +9,44 @@ namespace Compi
 {
     public class Lexico
     {
-        public List<Error> listaError; //SALIDA 
-        public List<Token> listaToken; //atributo es la SALIDA del lexico.
+        public List<Error> listaError; 
+        public List<Token> listaToken; 
 
-        private string codigoFuente;    // atributo que representa la ENTRADA del lexico.
+        private string codigoFuente;
         private int linea;
 
         private int[,] matrizTransicion =
         {
-             //  0       1      2       3       4      5      6       7     8      9      10     11    12     13        14       15       16     17      18       19     
-            //  Let  || Num ||  +  ||   -   ||  *  ||  /  ||  ;  ||   . ||  :  ||  ,  ||  (  ||  )  ||  "  ||  >  ||     <  ||   =   ||   eb  ||   nl  ||  tab ||   oc   ||
-       /* 0 */{  1   ,  2    ,  103 ,  104  ,   105 ,  5   ,  114 ,  115 ,  8   ,  117 ,  118 ,  119 ,  9   ,  10  ,    11   ,   12   ,   0    ,   0    ,  0    ,   501   ,},
-       /* 1 */{  1   ,  1    ,  100 ,  100  ,   100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,    100  ,   100  ,   100  ,   100  ,  100  ,   100   ,},
-       /* 2 */{  101 ,  2    ,  101 ,  101  ,   101 ,  500 ,  101 ,  3   ,  101 ,  101 ,  101 ,  101 ,  101 ,  101 ,    101  ,   101  ,   101  ,   101  ,  101  ,   101   ,},
-       /* 3 */{  500 ,  4    ,  500 ,  500  ,   500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,    500  ,   500  ,   500  ,   500  ,  500  ,   500   ,},
-       /* 4 */{  102 ,  4    ,  102 ,  102  ,   102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,    102  ,   102  ,   102  ,   102  ,  102  ,   102   ,},
-       /* 5 */{  106 ,  106  ,  106 ,  106  ,   6   ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,    106  ,   106  ,   106  ,   106  ,  106  ,   106   ,},
-       /* 6 */{  6   ,  6    ,  6   ,  6    ,   7   ,   6  ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,    6    ,   6    ,   6    ,   6    ,  6    ,   6     ,},
-       /* 7 */{  6   ,  6    ,  6   ,  6    ,   6   ,   0  ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,    6    ,   6    ,   6    ,   6    ,  6    ,   6     ,},
-       /* 8 */{  116 ,  116  ,  116 ,  116  ,   116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,    116  ,   113  ,   116  ,   116  ,  116  ,   116   ,},
-       /* 9 */{  9   ,  9    ,  9   ,  9    ,   9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  120 ,  9   ,    9    ,   9    ,   9    ,   9    ,  9    ,   9     ,},
-       /* 10*/{  107 ,  107  ,  107 ,  107  ,   107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,    107  ,   108  ,   107  ,   107  ,  107  ,   107   ,},
-       /* 11*/{  109 ,  109  ,  109 ,  109  ,   109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  112 ,    109  ,   110  ,   109  ,   109  ,  109  ,   109   ,},
-       /* 12*/{  502 ,  502  ,  502 ,  502  ,   502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,    502  ,   111  ,   502  ,   502  ,  502  ,   502   ,},
+             //  0       1      2       3       4      5      6       7     8      9      10     11    12     13        14       15       16     17      18       19         20
+            //  Let  || Num ||  +  ||   -   ||  *  ||  /  ||  ;  ||   . ||  :  ||  ,  ||  (  ||  )  ||  "  ||  >  ||     <  ||   =   ||   eb  ||   nl  ||  tab ||   oc   ||  eof
+       /* 0 */{  1   ,  2    ,  103 ,  104  ,   105 ,  5   ,  114 ,  115 ,  8   ,  117 ,  118 ,  119 ,  9   ,  10  ,    11   ,   12   ,   0    ,   0    ,  0    ,   501   ,    0 ,},
+       /* 1 */{  1   ,  1    ,  100 ,  100  ,   100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,  100 ,    100  ,   100  ,   100  ,   100  ,  100  ,   100   ,   100,},
+       /* 2 */{  101 ,  2    ,  101 ,  101  ,   101 ,  101 ,  101 ,  3   ,  101 ,  101 ,  101 ,  101 ,  101 ,  101 ,    101  ,   101  ,   101  ,   101  ,  101  ,   101   ,   101,},
+       /* 3 */{  500 ,  4    ,  500 ,  500  ,   500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,  500 ,    500  ,   500  ,   500  ,   500  ,  500  ,   500   ,   500,},
+       /* 4 */{  102 ,  4    ,  102 ,  102  ,   102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,  102 ,    102  ,   102  ,   102  ,   102  ,  102  ,   102   ,   102,},
+       /* 5 */{  106 ,  106  ,  106 ,  106  ,   6   ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,  106 ,    106  ,   106  ,   106  ,   106  ,  106  ,   106   ,   106,},
+       /* 6 */{  6   ,  6    ,  6   ,  6    ,   7   ,   6  ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,    6    ,   6    ,   6    ,   6    ,  6    ,   6     ,    6 ,},
+       /* 7 */{  6   ,  6    ,  6   ,  6    ,   6   ,   0  ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,  6   ,    6    ,   6    ,   6    ,   6    ,  6    ,   6     ,    6 ,},
+       /* 8 */{  116 ,  116  ,  116 ,  116  ,   116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,  116 ,    116  ,   113  ,   116  ,   116  ,  116  ,   116   ,   116,},
+       /* 9 */{  9   ,  9    ,  9   ,  9    ,   9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  9   ,  120 ,  9   ,    9    ,   9    ,   9    ,   9    ,  9    ,   9     ,   503,},
+       /* 10*/{  107 ,  107  ,  107 ,  107  ,   107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,  107 ,    107  ,   108  ,   107  ,   107  ,  107  ,   107   ,   107,},
+       /* 11*/{  109 ,  109  ,  109 ,  109  ,   109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  109 ,  112 ,    109  ,   110  ,   109  ,   109  ,  109  ,   109   ,   109,},
+       /* 12*/{  502 ,  502  ,  502 ,  502  ,   502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,  502 ,    502  ,   111  ,   502  ,   502  ,  502  ,   502   ,   502,},
 
         };
 
-        /// <summary>
-        /// Cosntructor 
-        /// </summary>
-        /// <param name="codigo">el contenido del archivo que abrimos</param>
         public Lexico(string codigoFuenteInterface)
         {
             codigoFuente = codigoFuenteInterface + " ";
-            listaToken = new List<Token>();  // inicializar
-            listaError = new List<Error>();  // inicializar
-        } //constructor
+            listaToken = new List<Token>();
+            listaError = new List<Error>();
+        } 
 
 
-        /// <summary>
-        /// metodo para regresar el token de la palabra reservada
-        /// </summary>
-        /// <param name="lexema">cadena que compone el token</param>
-        /// <returns></returns>
-        /// 
         public List<Token> EjecutarLexico()
         {
-            int estado = 0; //  la fila de la matriz y el estado actual del AFD
-            int columna = 0; // presenta la columna de la matriz
+            int estado = 0;
+            int columna = 0; 
 
             char caracterActual;
             string lexema = string.Empty;
@@ -80,7 +70,8 @@ namespace Compi
                 {
                     if (lexema.Length > 1)
                     {
-                        if (lexema == "==" || lexema == "<>" || lexema == "<=" || lexema == ">=" || lexema == ":=" || lexema.EndsWith("'"))
+                        char comilla = ('"');
+                        if (lexema == "==" || lexema == "<>" || lexema == "<=" || lexema == ">=" || lexema == ":=" || lexema.EndsWith(comilla.ToString()))
                         {
 
                         }
@@ -96,7 +87,7 @@ namespace Compi
 
                     if (estado == 100)
                         nuevoToken.ValorToken = esPalabraReservada(nuevoToken.Lexema);
-                    
+
                     nuevoToken.TipoToken = esTipo(nuevoToken.ValorToken);
 
                     listaToken.Add(nuevoToken); //agrego el tokena a la lista
@@ -122,7 +113,7 @@ namespace Compi
                 }
             }
             return listaToken; // el resultado final del lexico
-        } //metodo principal de la clase lexico
+        } 
 
         private int esPalabraReservada(string lexema)
         {
@@ -164,15 +155,19 @@ namespace Compi
                     return 216;
                 case "not":
                     return 217;
+                case "true":
+                    return 218;
+                case "false":
+                    return 218;
+                case "endw":
+                    return 219;
+                case "endif":
+                    return 220;
                 default:
                     return 100;
             }
         }
 
-        /// <summary>
-        /// es el metodo que me regrese el siguiente caracter del codigo fuente
-        /// </summary>
-        /// <returns></returns>
         private char SiguienteCaracter(int i)
         {
             return Convert.ToChar(codigoFuente.Substring(i, 1));
@@ -188,7 +183,7 @@ namespace Compi
             {
                 return 1;
             }
-            else if (caracter.Equals("+"))
+            else if (caracter.Equals('+'))
             {
                 return 2;
             }
@@ -248,7 +243,7 @@ namespace Compi
             {
                 return 16;
             }
-            else if (caracter.Equals('\n'))
+            else if (caracter.Equals('\n') || caracter.Equals('\r'))
             {
                 return 17;
             }
@@ -310,6 +305,8 @@ namespace Compi
                     return TipoToken.SimboloSimple;
                 case 120:
                     return TipoToken.Cadena;
+                case 218:
+                    return TipoToken.Booleano;
                 default:
                     return TipoToken.PalabraReservada;
 
@@ -330,6 +327,9 @@ namespace Compi
                     break;
                 case 502:
                     mensajeError = "Otra cosa";
+                    break;
+                case 503:
+                    mensajeError = "Cerrar comillas";
                     break;
                 default:
                     mensajeError = "Error inesperado";

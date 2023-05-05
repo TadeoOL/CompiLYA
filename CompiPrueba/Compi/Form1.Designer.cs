@@ -35,12 +35,16 @@ namespace Compi
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compiladorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ejecutarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sintacticoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvErrores = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLexico)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvErrores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvLexico
@@ -58,7 +62,7 @@ namespace Compi
             this.txtCodigoFuente.Location = new System.Drawing.Point(12, 27);
             this.txtCodigoFuente.Multiline = true;
             this.txtCodigoFuente.Name = "txtCodigoFuente";
-            this.txtCodigoFuente.Size = new System.Drawing.Size(487, 566);
+            this.txtCodigoFuente.Size = new System.Drawing.Size(500, 486);
             this.txtCodigoFuente.TabIndex = 1;
             // 
             // menuStrip1
@@ -68,7 +72,7 @@ namespace Compi
             this.compiladorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1113, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1916, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -81,7 +85,8 @@ namespace Compi
             // compiladorToolStripMenuItem
             // 
             this.compiladorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ejecutarToolStripMenuItem});
+            this.ejecutarToolStripMenuItem,
+            this.sintacticoToolStripMenuItem});
             this.compiladorToolStripMenuItem.Name = "compiladorToolStripMenuItem";
             this.compiladorToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.compiladorToolStripMenuItem.Text = "Compilador";
@@ -89,9 +94,16 @@ namespace Compi
             // ejecutarToolStripMenuItem
             // 
             this.ejecutarToolStripMenuItem.Name = "ejecutarToolStripMenuItem";
-            this.ejecutarToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.ejecutarToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.ejecutarToolStripMenuItem.Text = "Ejecutar";
             this.ejecutarToolStripMenuItem.Click += new System.EventHandler(this.ejecutarToolStripMenuItem_Click);
+            // 
+            // sintacticoToolStripMenuItem
+            // 
+            this.sintacticoToolStripMenuItem.Name = "sintacticoToolStripMenuItem";
+            this.sintacticoToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.sintacticoToolStripMenuItem.Text = "Sintactico";
+            this.sintacticoToolStripMenuItem.Click += new System.EventHandler(this.sintacticoToolStripMenuItem_Click);
             // 
             // dgvErrores
             // 
@@ -121,11 +133,32 @@ namespace Compi
             this.label2.TabIndex = 5;
             this.label2.Text = "Errores";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(1128, 46);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
+            this.dataGridView1.Size = new System.Drawing.Size(368, 467);
+            this.dataGridView1.TabIndex = 7;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(1532, 46);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(372, 467);
+            this.textBox1.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1113, 605);
+            this.ClientSize = new System.Drawing.Size(1916, 562);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvErrores);
@@ -135,10 +168,12 @@ namespace Compi
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLexico)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvErrores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,6 +190,9 @@ namespace Compi
         private System.Windows.Forms.DataGridView dgvErrores;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem sintacticoToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

@@ -16,3 +16,5 @@ C:\Users\Tadeo\source\repos\CompiPrueba\Compi\obj\Release\Compi.csproj.GenerateR
 C:\Users\Tadeo\source\repos\CompiPrueba\Compi\obj\Release\Compi.csproj.CoreCompileInputs.cache
 C:\Users\Tadeo\source\repos\CompiPrueba\Compi\obj\Release\Compi.exe
 C:\Users\Tadeo\source\repos\CompiPrueba\Compi\obj\Release\Compi.pdb
+C:\Users\Tadeo\source\repos\CompiPrueba\Compi\obj\Release\Compi.csproj.SuggestedBindingRedirects.cache
+C:\Users\Tadeo\source\repos\CompiPrueba\Compi\bin\Release\Compi.exe.config

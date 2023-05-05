@@ -17,7 +17,8 @@ namespace Compi
         NumeroDecimal,
         Cadena,
         Caracter,
-        Real
+        Real,
+        Booleano
     }
     public class Token
     {

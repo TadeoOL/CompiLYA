@@ -55,11 +55,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Lexico.cs" />
+    <Compile Include="Polish.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sintatico.cs" />
     <Compile Include="Token.cs" />
-    <Compile Include="VerificadorTipos.cs" />
+    <Compile Include="Variable.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
